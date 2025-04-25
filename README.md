@@ -1,8 +1,19 @@
-# TypePilot
+# TypePilot (Firefox Build)
 
-A powerful Chrome extension that provides AI assistance directly in your browser. TypePilot allows users to interact with various AI models including Gemini 2.5 Pro, GPT-4, and Claude through any of there browser tabs.
+A powerful Chrome extension that provides AI assistance directly in your browser. TypePilot allows users to interact with various AI models including Gemini 2.5 Pro, GPT-4, and Claude through any of there browser tabs. This version of TypePilot is tweaked specifically for compatibility with Mozilla Firefox.
 
 ![TypePilot Logo](icons/logo.png)
+
+## Index
+- [Features](#features)
+- [Installation](#installation)
+- [API Keys](#api-keys)
+- [Custom models](#custom-models)
+- [Project structure](#project-structure)
+- [Security](#security)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Features
 
@@ -10,22 +21,24 @@ A powerful Chrome extension that provides AI assistance directly in your browser
 - **Custom Command Keyword**: Personalize your trigger keyword for AI assistance (default: "help:")
 - **Privacy-Focused**: API keys are stored only in your browser and never sent to our servers
 
-## How It Works
-
-1. Install the TypePilot extension
-2. Configure your preferred AI model and API keys
-3. Type your custom command (default: "help:") followed by your query in any text field on the web
-4. The AI will process your request and provide a response directly where you're typing
-
 ## Installation
+Method 1: Temporary addon (For testing purposes)
+>[!CAUTION]
+> This method of installing TypePilot is not recommended as certain details or data won't be stored in your device.
+1. Clone the repo using
+   ```bash
+   git clone https://github.com/neumaz66/TypePilotFirefox
+   ```
+2. Go to about:debugging in Mozilla Firefox
+3. Go to "This Device" section from the sidebar on the left
+4. Click on "Load Temporary Add-on" button
+5. Select the ***manifest.json*** only from the cloned folder.
+6. Click on Open
+7. Now you can access the extension like how you would normally do from the extension menu.
 
-1. Clone this repository or download the ZIP file
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top-right corner
-4. Click "Load unpacked" and select the extension directory
-5. The TypePilot extension should now be installed and visible in your browser toolbar
+>[!WARNING]
+> On closing firefox, the extension will be unloaded and some data might disappear. Use for testing only
 
-## Configuration
 
 ### API Keys
 
@@ -43,6 +56,13 @@ You can also add your own custom model by providing:
 - API endpoint
 - API key
 
+  To do this:
+  1. Open the extension popup
+  2. Select "Add Custom Model"
+  3. Provide the details you obtained (Any model name, API endpoint and the specific API key)
+  4. Click save
+  5. Now you can select your own custom model from the AI model dropdown list
+
 ## Project Structure
 
 - `manifest.json`: Extension configuration
@@ -53,15 +73,6 @@ You can also add your own custom model by providing:
 - `popup-state.js`: Manages login state and UI transitions
 - `components/`: Contains modular components like login and registration forms
 - `styles/`: CSS styling for the extension
-
-## Development
-
-The extension is built using:
-
-- Manifest V3
-- Vanilla JavaScript
-- Chrome Extension APIs
-- Supabase for backend authentication and data storage
 
 
 ## Security
@@ -82,4 +93,5 @@ MIT License
 
 ## Contact
 
-- Page: https://devadath.co
+- (Dev-devadath) Page: https://devadath.co
+- (Neumaz66) Page: https://neumaz66.github.io/portfolio (Scroll down to the bottom and click the mail-to icon)
