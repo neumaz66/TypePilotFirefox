@@ -95,3 +95,6 @@ MIT License
 
 - (Dev-devadath) Page: https://devadath.co
 - (Neumaz66) Page: https://neumaz66.github.io/portfolio (Scroll down to the bottom and click the mail-to icon)
+
+## For Chrome version
+ [TypePilot Chrome-based builds](https://github.com/Dev-devadath/TypePilot)
