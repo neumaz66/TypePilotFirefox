@@ -39,6 +39,11 @@ Method 1: Temporary addon (For testing purposes)
 >[!WARNING]
 > On closing firefox, the extension will be unloaded and some data might disappear. Use for testing only
 
+Method 2: Permanent method (aka full download)
+1. Download the latest version of TypePilot from [releases](https://github.com/neumaz66/TypePilotFirefox/releases) (it will be a .xpi file)
+2. Double-click or just run it, Firefox will be opened and a small popup will be shown asking if you want to add this extension
+3. Click on Add
+4. Now you can use the extension normally from the menu
 
 ### API Keys
 
