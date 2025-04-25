@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "TypePilot",
+  "version": "1.0",
+  "description": "An AI assistant that helps you with text input across the web",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/logo.png",
+      "48": "icons/logo.png",
+      "128": "icons/logo.png"
+    }
+  },
+  "icons": {
+    "16": "icons/logo.png",
+    "48": "icons/logo.png",
+    "128": "icons/logo.png"
+  },
+  "web_accessible_resources": [
+    ".env"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "typepilot@yourdomain.com"
+    }
+  }
+}

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TypePilot</title>
+    <style>
+      :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #18181c;
+        --bg-tertiary: #1a1a1a;
+        --text-primary: #f4f4f4;
+        --text-secondary: #b0b0b0;
+        --accent-color: #e11d48;
+        --neon-red: #e11d48;
+        --neon-darkred: #7f1d1d;
+        --neon-black: #0a0a0a;
+        --success-color: #16a34a;
+        --warning-color: #f59e0b;
+        --error-color: #ef4444;
+      }
+      body {
+        width: 370px;
+        min-width: 370px;
+        max-width: 370px;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(225, 29, 72, 0.15);
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+      }
+      /* Remove scrollbar for popup, but allow scrolling inside modals if needed */
+      html, body {
+        scrollbar-width: none; /* Firefox */
+      }
+      body::-webkit-scrollbar, html::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+      .container {
+        padding: 20px 24px 18px 24px;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary) 90%);
+        border-radius: 18px;
+        min-height: 100vh;
+      }
+      .app-heading {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin: 2px 0 18px;
+        letter-spacing: 1.5px;
+        background: linear-gradient(90deg, var(--neon-red), var(--neon-darkred));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .app-tagline {
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin: -10px 0 15px;
+        opacity: 0.8;
+        white-space: nowrap;
+      }
+      .app-logo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, var(--neon-red), var(--bg-tertiary));
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 13px;
+        box-shadow: 0 2px 8px rgba(225, 29, 72, 0.15);
+      }
+      .model-selector, .api-key-config, .command-section {
+        background: var(--bg-tertiary);
+        border-radius: 9px;
+        padding: 10px 8px;
+        margin-bottom: 13px;
+        box-shadow: 0 1px 4px rgba(225, 29, 72, 0.06);
+      }
+      .model-selector label, .api-key-config label, .command-section label {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: block;
+        text-align: center;
+      }
+      .api-key-config {
+        text-align: center;
+      }
+      .input-wrapper {
+        width: 100%;
+        padding-left: 2px;
+        padding-right: 2px;
+        box-sizing: border-box;
+        margin-bottom: 0;
+      }
+      select, input[type="text"], input[type="password"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 9px 12px;
+        border-radius: 6px;
+        border: 1.5px solid #e5e7eb;
+        background: #18181c;
+        color: var(--text-primary);
+        font-size: 1rem;
+        margin-top: 3px;
+        margin-bottom: 9px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 1px 4px rgba(225,29,72,0.04);
+        max-width: 100%;
+      }
+      select:focus, input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px var(--accent-color);
+      }
+      .btn-primary {
+        display: block;
+        margin: 0 auto 3px auto;
+        width: 95%;
+        background: linear-gradient(90deg, var(--neon-red), var(--neon-darkred));
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 0;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 7px;
+        margin-bottom: 3px;
+        box-shadow: 0 2px 8px rgba(225, 29, 72, 0.10);
+        transition: background 0.2s;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(90deg, #b91c1c, #e11d48 80%);
+      }
+      .add-custom-model {
+        background: none;
+        border: 1.5px solid var(--accent-color);
+        color: var(--accent-color);
+        border-radius: 6px;
+        padding: 7px 0;
+        font-size: 0.98rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 5px;
+        margin-bottom: 3px;
+        width: 100%;
+        display: block;
+        margin: 5px auto 3px auto;
+      }
+      .add-custom-model:hover {
+        background: var(--neon-red);
+        color: #fff;
+      }
+      .command-section input {
+        margin-bottom: 0;
+      }
+      .hint {
+        display: block;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        margin-top: 6px;
+        margin-bottom: 2px;
+        text-align: left;
+      }
+      .modal {
+        background: rgba(10, 10, 10, 0.92);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-content {
+        background: var(--bg-secondary);
+        border-radius: 16px;
+        padding: 28px 18px 18px 18px;
+        width: 98%;
+        max-width: 370px;
+        min-width: 300px;
+        border: 2px solid var(--accent-color);
+        box-shadow: 0 8px 32px rgba(225, 29, 72, 0.25);
+        position: relative;
+        z-index: 10000;
+      }
+      /* Thin scrollbar */
+      ::-webkit-scrollbar {
+        width: 5px;
+        background: var(--bg-secondary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--neon-red);
+        border-radius: 4px;
+      }
+      .error-message {
+        color: var(--error-color);
+        background: rgba(239,68,68,0.11);
+        border: 1px solid var(--error-color);
+        border-radius: 6px;
+        padding: 8px 12px;
+        margin: 10px 0 0 0;
+        font-size: 0.96rem;
+        text-align: center;
+        display: none;
+      }
+      .keyword-suffix {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--accent-color);
+        font-size: 1.2em;
+        pointer-events: none;
+        font-weight: bold;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- App Heading -->
+      <h1 class="app-heading">TypePilot</h1>
+      <p class="app-tagline">The AI you need is right where you're typing.</p>
+
+      <!-- API Key Button (TOP, single) -->
+      <div class="api-key-config" style="margin-bottom: 20px; margin-top: 10px; text-align:center;">
+        <label for="apiKeyButton" style="text-align:center;">Configure API Keys</label>
+        <button class="btn-primary" id="apiKeyButton" style="font-size: 1.1rem; margin:0 auto; display:block;">Configure API Keys</button>
+      </div>
+
+      <!-- Model Selector -->
+      <div class="model-selector" style="margin-bottom: 15px">
+        <label for="modelSelect" style="text-align:center;">AI Model</label>
+        <div class="input-wrapper">
+          <select id="modelSelect">
+            <option value="gemini" selected>Gemini 2.5 Pro</option>
+            <option value="gpt4">GPT-4</option>
+            <option value="claude">Claude</option>
+            <option value="custom">Custom Model</option>
+          </select>
+        </div>
+        <button class="add-custom-model" id="addCustomModelBtn" style="margin-top: 12px;">Add Custom Model</button>
+      </div>
+
+      <!-- Command Input -->
+      <div class="command-section">
+        <label for="commandInput" style="text-align:center;">Enter Command</label>
+        <div class="input-wrapper" style="position: relative;">
+          <input id="commandInput" type="text" value="help" placeholder="Type your keyword here..." style="padding-right: 22px;" />
+          <span class="keyword-suffix">:</span>
+        </div>
+        <span class="hint">End keyword is <b>...</b></span>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer" style="margin-top: auto; padding-top: 15px">
+        &copy;
+        <a href="https://github.com/Dev-devadath/TypePilot" target="_blank" style="color: var(--accent-color)">Github</a>
+      </div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div id="apiKeyModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Configure API Keys</h3>
+        </div>
+        <div class="modal-body">
+          <div class="api-key-input input-wrapper">
+            <label for="openaiApiKey">OpenAI API Key (for GPT-4)</label>
+            <input type="password" id="openaiApiKey" placeholder="sk-..." />
+          </div>
+          <div class="api-key-input input-wrapper">
+            <label for="geminiApiKey">Google API Key (for Gemini)</label>
+            <input type="password" id="geminiApiKey" placeholder="AIza..." />
+          </div>
+          <div class="api-key-input input-wrapper">
+            <label for="claudeApiKey">Anthropic API Key (for Claude)</label>
+            <input type="password" id="claudeApiKey" placeholder="sk-ant-..." />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveApiKeyBtn" class="btn-primary">Save</button>
+          <button id="closeApiKeyModalBtn" class="btn-primary" style="background: none; border: 1.5px solid var(--accent-color); color: var(--accent-color)">Cancel</button>
+        </div>
+        <div class="modal-footer-text" style="margin-top: 14px; color: var(--text-secondary); font-size: 0.8rem; text-align: center; opacity: 0.8">
+          Your API keys are stored only in your browser and never sent to our servers.
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Model Modal -->
+    <div id="customModelModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add Custom Model</h3>
+        </div>
+        <div class="modal-body">
+          <div class="api-key-input input-wrapper">
+            <label for="customModelName">Model Name</label>
+            <input type="text" id="customModelName" placeholder="My Model" />
+          </div>
+          <div class="api-key-input input-wrapper">
+            <label for="customModelEndpoint">API Endpoint</label>
+            <input type="text" id="customModelEndpoint" placeholder="https://api.example.com/v1/chat" />
+          </div>
+          <div class="api-key-input input-wrapper">
+            <label for="customModelKey">API Key</label>
+            <input type="password" id="customModelKey" placeholder="Your API Key" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveCustomModelBtn" class="btn-primary">Save</button>
+          <button id="closeCustomModelModalBtn" class="btn-primary" style="background: none; border: 1.5px solid var(--accent-color); color: var(--accent-color)">Cancel</button>
+        </div>
+        <div class="modal-footer-text" style="margin-top: 14px; color: var(--text-secondary); font-size: 0.8rem; text-align: center; opacity: 0.8">
+          Custom models are stored only in your browser.
+        </div>
+      </div>
+    </div>
+
+    <!-- External script references -->
+    <script src="popup.js"></script>
+    <script src="popup-state.js"></script>
+  </body>
+</html>
